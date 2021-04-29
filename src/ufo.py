@@ -1,11 +1,11 @@
 import pygame,sys
 from pygame.locals import *
 from random import randint
-from . import missile
-width = 900
-high = 600
+from . import missile, conf
+
+print(conf.width)
 class Ufo(pygame.sprite.Sprite):
-    def __init__(self, pos_x, pos_y,distance, imagen_one):
+    def __init__(self, pos_x, pos_y,distance, imagen_one,velocity=1):
         pygame.sprite.Sprite.__init__(self)
         
         self.ufo = pygame.image.load(imagen_one)
@@ -15,7 +15,7 @@ class Ufo(pygame.sprite.Sprite):
         self.rect = self.ufo.get_rect()
         
         self.list_shoot = []
-        self.velocity = 1
+        self.velocity = velocity
         
         self.rect.top = pos_y
         self.rect.left = pos_x  
@@ -55,7 +55,7 @@ class Ufo(pygame.sprite.Sprite):
     def __movement_lateral(self):
         if self.right == True:
             self.rect.left = self.rect.left + self.velocity
-            if self.rect.left > width -100:
+            if self.rect.left > conf.width -100:
     
                 self.right =  False
                 self.count += 1
@@ -69,7 +69,7 @@ class Ufo(pygame.sprite.Sprite):
         surface.blit(self.ufo, self.rect)
     
     def __attack(self):
-        if (randint(0,20)< self.range_shoot):
+        if (randint(0,2500)< self.range_shoot):
             self.__shoot()
     
     def __shoot(self):
